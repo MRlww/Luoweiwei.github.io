@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI设计探险家招募令</title>
+    <style>
+        :root {
+            --neon-blue: #00f0ff;
+            --neon-purple: #bd00ff;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(15, 15, 35, 0.7);
+            --text-light: #e0e0ff;
+        }
+        
+        @font-face {
+            font-family: 'Digital';
+            src: url('https://fonts.cdnfonts.com/css/digital-7-mono');
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(189, 0, 255, 0.1) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #001a33, #0d0026);
+            padding: 80px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--neon-blue);
+            font-family: 'Digital', monospace;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 8px currentColor;
+        }
+        
+        /* Main Sections */
+        section {
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: var(--neon-blue);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), transparent);
+        }
+        
+        /* Cards */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 30px;
+            width: 350px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+        
+        .card:hover::before {
+            opacity: 0.3;
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--neon-blue);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(0, 16, 33, 0.8), rgba(13, 0, 38, 0.8));
+            border-top: 1px solid var(--neon-purple);
+            border-bottom: 1px solid var(--neon-purple);
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+        
+        .btn-primary:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 240, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: 10% auto;
+            padding: 20px;
+            width: 300px;
+            background: var(--dark-bg);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+            text-align: center;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px var(--neon-blue); }
+            to { box-shadow: 0 0 20px var(--neon-purple); }
+        }
+        
+        .qrcode {
+            width: 100%;
+            padding: 10px;
+            background: white;
+            margin: 15px 0;
+        }
+        
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: var(--neon-blue);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .tips {
+            color: var(--neon-blue);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+            color: rgba(224, 224, 255, 0.6);
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .card {
+                width: 100%;
+            }
+            
+            .modal-content {
+                width: 80%;
+                margin: 20% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1>AI设计探险家招募令</h1>
+            <p class="subtitle glow-text">>"施工图+BIM的智能未来，等你来定义"</p>
+            <p class="glow-text">不画饼，不设限，只搞事——用AI重新想象设计全流程</p>
+        </div>
+    </header>
+    
+    <section>
+        <div class="container">
+            <h2 class="section-title">我们是谁？</h2>
+            <div class="card neon-border">
+                <p>"一群<strong>用CAD画图、用Revit建模</strong>，但总在琢磨<strong>'这活儿AI能不能干？'</strong>的设计师。"</p>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <h2 class="section-title">你在找这样的同伴吗？</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>✅ "职业病"发作型</h3>
+                    <p>看到同事<strong>手动改100张图纸</strong>，第一反应是"这不该让AI干吗？"</p>
+                    <p>刷到<strong>AI生成BIM模型</strong>的视频，会想："我们的项目能不能也这么玩？"</p>
+                </div>
+                <div class="card">
+                    <h3>✅ 工具折腾爱好者</h3>
+                    <p>试过用<strong>ChatGPT写设计说明</strong>，或用<strong>Stable Diffusion生成节点大样</strong></p>
+                    <p>折腾过<strong>Dynamo脚本</strong>，或者想试试<strong>AI自动优化BIM管线排布</strong></p>
+                </div>
+                <div class="card">
+                    <h3>✅ 规则破解脑洞派</h3>
+                    <p>觉得<strong>设计规范</strong>像"固定代码"，想用AI自动校验</p>
+                    <p>幻想过："如果我训练一个AI，它能不能学会我们公司的<strong>BIM标准</strong>？"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <h2 class="section-title">我们能一起探索什么？</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>🔹 施工图AI实验组</h3>
+                    <p><strong>智能审图</strong>：让AI学习历史图纸，自动标注"易错点"（比如楼梯净高、防火间距）</p>
+                    <p><strong>自动化出图</strong>：输入参数，AI生成符合公司标准的图纸框架</p>
+                    <p><strong>设计说明AI助手</strong>：训练一个懂"施工图黑话"的专用模型</p>
+                </div>
+                <div class="card">
+                    <h3>🔹 BIM+AI脑洞组</h3>
+                    <p><strong>AI辅助建模</strong>：用自然语言描述，让AI生成初步BIM结构（如："给我一个8层办公楼框架"）</p>
+                    <p><strong>智能 clash检测</strong>：训练AI预测管线碰撞高发区，减少后期修改</p>
+                    <p><strong>BIM数据挖掘</strong>：用AI分析历史项目，优化材料用量和工期预测</p>
+                </div>
+                <div class="card">
+                    <h3>🔹 自由探索区</h3>
+                    <p>你提出的任何<strong>"不靠谱但有趣"</strong>的AI应用场景</p>
+                    <p>比如："用AI模拟施工进度动画"或"AI自动生成技术交底PPT"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">为什么值得加入？</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>🌱 纯粹的兴趣社群</h3>
+                    <p>没有KPI，只有"<strong>哇这也能行？</strong>"的瞬间</p>
+                    <p>你的一个小脚本，可能让全组同事少加1小时班</p>
+                </div>
+                <div class="card">
+                    <h3>🤝 找到同类</h3>
+                    <p>和那些<strong>"觉得AI不只是ChatGPT聊天"</strong>的人在一起</p>
+                    <p>不用再向领导解释"<strong>为什么设计师要学Python</strong>"</p>
+                </div>
+                <div class="card">
+                    <h3>💡 公司开放资源</h3>
+                    <p>提供<strong>脱敏项目数据</strong>供测试（不涉密部分）</p>
+                    <p>成功落地的工具，可以申请<strong>算力补贴</strong>（如果真有用！）</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">准备好加入了吗？</h2>
+            <p>如果你：</p>
+            <p>- 曾因AI的可能性兴奋过，但缺人一起折腾</p>
+            <p>- 哪怕只是好奇，想看看<strong>AI+设计</strong>能擦出什么火花</p>
+            
+            <div style="margin: 40px 0;">
+                <button id="showQrcodeBtn" class="btn btn-primary pulse">🚪 点击获取入群通道</button>
+            </div>
+            
+            <p>联系：扫码/找XXX，暗号：<strong class="glow-text">"AI救救画图人"</strong></p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 设计未来实验室 | 用AI重新定义设计工作流</p>
+        </div>
+    </footer>
+
+    <!-- 二维码弹窗 -->
+    <div id="qrcodeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 style="color: var(--neon-blue);">AI设计黑客组织</h3>
+            <p>扫码加入极客社群</p>
+            <!-- 替换为你的实际二维码图片 -->
+            <img class="qrcode" src="https://via.placeholder.com/300x300.png?text=微信群二维码" alt="微信群二维码">
+            <p class="tips">* 7日内有效 *<br>添加备注：<span style="color:var(--neon-purple)">AI救救画图人</span></p>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const modal = document.getElementById("qrcodeModal");
+        const btn = document.getElementById("showQrcodeBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        // 点击按钮打开弹窗
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // 点击X关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 点击弹窗外部关闭
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // 手机端触摸事件支持
+        btn.ontouchstart = function() {
+            modal.style.display = "block";
+        }
+
+        // 防止二维码被右键保存
+        document.addEventListener('contextmenu', function(e) {
+            if(e.target.className.includes('qrcode')) {
+                e.preventDefault();
+                alert('请通过官方渠道获取入群资格');
+            }
+        });
+    </script>
+</body>
+</html>
